@@ -85,7 +85,7 @@ image.features.t1 = c(source1, xpos1, ypos1)
 # TO TURN OFF IMAGES SUPPORT COMMENT LINE BELOW
 images.base.dir = "~/140719_dane_ze_wspolrzednymi/spiny/"
 spine.image.size = 70
-visualise.num.representants = 3
+visualise.num.representants = 20
 
 
 # features that should be kept while splitting data according to time moments
@@ -111,11 +111,17 @@ normalization = F
 # Clustering parameters:
 
 #clustering.method = "hierarchical"
-clustering.method = "cmeans"
-#clustering.method = "kmeans"
+#k = 10
+#m = 1
 
+clustering.method = "cmeans"
 k = 8
 m = 4
+
+#clustering.method = "kmeans"
+#k = 8
+#m = 1
+
 
 # Transition matrices:
 
@@ -167,7 +173,7 @@ source(file="routine_data_preparation.r")
 source(file="routine_groups_ttest.r")
 
 #######################################################################################
-# K-fold crossvalidation of prediction error estimation on training data.
+# K-fold crossvalidation of prediction error estimation on training data [optional].
 
 source(file="routine_kfold_prediction.r")
 
