@@ -1,14 +1,15 @@
-dendritic-spines-modeling
-====================
+Code used in the following paper:
 
-The common approach in morphological analysis of dendritic spines is to categorize spines into subpopulations based on whether they are stubby, mushroom, thin, or filopodia. Corresponding cellular models of synaptic plasticity, long-term potentiation, and long-term depression associate synaptic strength with either spine enlargement or spine shrinkage.
-However, there is a lack of methods allowing for an automatic distinction between dendritic spine subpopulations. Although a variety of automatic spine segmentation and feature extraction methods were developed recently, no approaches allowing for an automatic and unbiased distinction between dendritic spine subpopulations and detailed computational models of spine behavior exist. To fill this gap, we provide a software that provide insight into dendritic spine shape taxonomy and transitions in time.
+**G. Bokota, M. Magnowska, T. Kusmierczyk, M. Lukasik, et al.: Computational approach to dendritic spine taxonomy and shape transition analysis. Frontiers in Computational Neuroscience, 2016.**
 
-We propose an automatic and statistically based method for the unsupervised construction of spine shape taxonomy based on arbitrary features. The taxonomy is utilized in the newly introduced computational model of behavior, which relies on transitions between shapes. Models of two different populations can be compared using supplied bootstrap-based statistical tests. The comparison of shape transition characteristics allows to identify differences between population behaviors. 
+-----------------------------------------------------------------------------------------------------------------
 
-To start working with the model the user first should set the proper working directory. In Rstudio it can be done with: `setwd("PATH-TO-THE-SOFTWARE/clustering/")`. After that the appropriate script can be opened from the menu (File -> Open File) and either executed as a whole or run line after the line with Ctrl+Enter. The authors recommend the second approach as it allows for easy observation of results and the validation of the execution.
+### Abstract 
 
-# Installation and requirements
+The common approach in morphological analysis of dendritic spines of mammalian neuronal cells is to categorize spines into subpopulations based on whether they are stubby, mushroom, thin, or filopodia shaped. The corresponding cellular models of synaptic plasticity, long-term potentiation, and long-term depression associate the synaptic strength with either spine enlargement or spine shrinkage. Although a variety of automatic spine segmentation and feature extraction methods were developed recently, no approaches allowing for an automatic and unbiased distinction between dendritic spine subpopulations and detailed computational models of spine behavior exist. We propose an automatic and statistically based method for the unsupervised construction of spine shape taxonomy based on arbitrary features. The taxonomy is then utilized in the newly introduced computational model of behavior, which relies on transitions between shapes. Models of different populations are compared using supplied bootstrap-based statistical tests. We compared two populations of spines at two time points. The first population was stimulated with long-term potentiation, and the other in the resting state was used as a control. The comparison of shape transition characteristics allowed us to identify the differences between population behaviors. Although some extreme changes were observed in the stimulated population, statistically significant differences were found only when whole models were compared. The source code of our software is freely available for non-commercial use1. Contact: d.plewczynski@cent.uw.edu.pl.
+
+
+### Installation and requirements
 The software was implemented with R (version 3.0.2). R is an interpreted language and to run the software an user should install appropriate interpreter that can be freely downloaded from the Internet. What is more, default installations may not contain all required libraries. In such case the user should install them manually. The following libraries (can be installed with `install.packages`) are required:
 * igraph
 * e1071
@@ -18,8 +19,7 @@ The software was implemented with R (version 3.0.2). R is an interpreted languag
 
 Further details can be found at [R-project](https://www.r-project.org/) or [R-bloggers](http://www.r-bloggers.com/installing-r-packages/). Additionally, authors recommend to work with supplied R scripts in an interactive way using  [Rstudio](https://www.rstudio.com/). 
 
-# Data format
-
+### Data format
 Below we show an example header for a data file representing our data format. The meaning of the consecutive columns is: 
 * `unique_id` - unique identifier
 * `nencki_id` - identifier assigned to a spine by the data provider
@@ -29,7 +29,7 @@ Below we show an example header for a data file representing our data format. Th
 * `0MIN_length, 0MIN_head_width, ... , 10_MIN_length 10_MIN_head_width, ...` -  feature values for consecutive timestamps. 
 As shown above, the separator is space.
 
-## Spines identifiers
+#### Spines identifiers
 Spines identifiers (`unique_id` column) should be composed of the following parts merged with the separator "-":
 * identifier for the dataset (for self-reference, may be 00)
 * animal id
@@ -38,12 +38,10 @@ Spines identifiers (`unique_id` column) should be composed of the following part
 
 Sample identifier is: `00-001-001-d`
 
-# Simplification of shape representations
-
+### Simplification of shape representations
 The initial features describing spines can be reduced with the dimensionality reduction technique to render the data representation to be more compact and simple and to filter out the noise. The code responsible for this analysis can be found in the files *routine_data_preparation.r* and *pca.r*. However, the calculation of the simplified representation was integrated in the main scripts (see below) and should not be run separately. 
 
-# Parameters selection
-
+###  Parameters selection
 The selection of parameters (fuzzifier `m` and number of clusters `k`) can be done with the help of the script *script_shape_transitions_parameters_selection.r*. 
 
 The script contains the following parts that should be run consecutively:
@@ -76,8 +74,7 @@ The script is parametrized by the following variables (that should be edited man
 * `output.dir` - a path to the directory where output plots and results should be stored
 
 
-# Clustering and models comparison
-
+### Clustering and models comparison
 The main script is *script_shape_transitions_analysis.r*. The script contains the following parts:
 * routines and libraries including
 * configuration and parameters setting (to be edited by the user by the execution)
@@ -123,4 +120,5 @@ The script is parametrized by the following variables (should be edited manually
  * `threshold.counts` - min weight of the edge to be plotted (for example 6 spines)
  * `threshold.percents` - min weight percentage of the edge to be plotted (for example 20% of spines)
 * `output.dir` - a path to the directory where output plots and results should be stored
+
 
